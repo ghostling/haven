@@ -11,7 +11,7 @@ if (Meteor.isClient) {
 
     Meteor.subscribe("rooms");
     Meteor.subscribe("messages");
-    Session.setDefault("roomname", "user1");
+    Session.setDefault("roomname", "");
 
     Template.login.events({
         'click .button-login': function(e)  {
