@@ -13,26 +13,26 @@ body
 
 template(name='navbar')
   .uk-grid
-    .uk-navbar.uk-width-1-1
+    .uk-navbar.uk-width-1-1.haven-navbar
       .uk-container.uk-container-center
         ul.uk-navbar-nav
           li Haven
-          +newChat
         .uk-navbar-flip
           ul.uk-navbar-nav
+            +newChat
             +login
 
 template(name='login')
   if currentUser
-    button.button-login Log out #{currentUser.profile.name}
+    button.uk-button.uk-button-link.button-login Log out #{currentUser.profile.name}
   else
-    button.button-login Log in with Facebook
+    button.uk-button.button-login Log in with Facebook
 
 template(name='chat')
   .uk-container.uk-container-center
     .uk-grid
       .uk-width-1-1
-        +search
+        //-+search
       .uk-width-3-10
         +rooms
       .uk-width-7-10
@@ -41,7 +41,7 @@ template(name='chat')
 
 template(name='newChat')
   if currentUser
-    button.button-newChat Find New Chat
+    button.uk-button.uk-button-success.button-newChat Find New Chat
 
 template(name='search')
   h2 Talk to me about...
