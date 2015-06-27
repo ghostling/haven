@@ -9,6 +9,14 @@ if (Meteor.isClient) {
         passwordSignupFields: 'USERNAME_ONLY'
     });
 
+    Template.carousel.rendered = function() {
+        //Create Accordion
+        $accordion = $("#accordion").accordion({"path":"accordion/"});
+        //Autoplay
+        $('#play').click();
+        $("[title='CSS jQuery']").remove();
+    };
+
     Meteor.subscribe("rooms");
     Meteor.subscribe("messages");
     Session.setDefault("roomname", "");
