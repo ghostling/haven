@@ -10,13 +10,14 @@ body
           .uk-container.uk-container-center
             h1 Haven
             +login
+            +carousel
 
 template(name='navbar')
   .uk-grid
     .uk-navbar.uk-width-1-1.haven-navbar
       .uk-container.uk-container-center
         ul.uk-navbar-nav
-          li Haven
+          li Haven 
         .uk-navbar-flip
           ul.uk-navbar-nav
             +newChat
@@ -85,3 +86,89 @@ template(name='tags')
   select(multiple, data-role="tagsinput")
     each currentUser.profile.tags
       option(value=this)
+
+template(name='carousel')
+  #acc-wrap
+    #accordion
+      #accdiv
+        ul#accul
+          li.accli
+            a(href='http://haven2.meteor.com/')
+              .imgdiv
+                .imgwrap
+                  img(src='accordion/02.jpg', alt='')
+              .short
+                p
+                  span First slide
+              .text.bottom-right
+                p
+                  span Blah blah
+                p
+                  span Blah blah
+                p
+                  span Blah blah
+          li.accli
+            a(href='accordion/img/02.jpg', data-gallery='gallery', data-cap='lightbox caption 02')
+              .imgdiv
+                .imgwrap
+                  img(src='accordion/02.jpg', alt='')
+              .short
+                p
+                  span Second slide
+              .text.top-left
+                p
+                  span Blah blah
+                p
+                  span(style='background: rgba(57, 108, 124, 0.52);') Blah blah
+          li.accli
+            a
+              .imgdiv
+                .imgwrap
+                  img(src='accordion/03.jpg', alt='')
+              .short
+                p
+                  span Third slide
+              .text.top-right
+                p
+                  span Blah blah
+                p
+                  span Blah blah
+          li.accli
+            a
+              .imgdiv
+                .imgwrap
+                  img(src='accordion/04.jpg', alt='')
+              .short
+                p
+                  span Fourth slide
+              .text.bottom-left
+                p
+                  span(style='background:rgba(44, 128, 128, 0.54)') Blah blah
+                p
+                  span(style='background:rgba(44, 128, 128, 0.54)') Blah blah
+          li.accli
+            a
+              .imgdiv
+                .imgwrap
+                  img(src='accordion/05.jpg', alt='')
+              .short
+                p
+                  span Fifth slide
+              .text.bottom-right
+                p
+                  span Blah blah
+          li.accli
+            a
+              .imgdiv
+                .imgwrap
+                  img(src='accordion/06.jpg', alt='')
+              .short
+                p
+                  span Sixth slide
+              .text.bottom-right
+                p
+                  span Blah blah
+                p
+                  span Blah blah
+      .Controller
+
