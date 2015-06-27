@@ -32,9 +32,10 @@ if (Meteor.isClient) {
             var tags
             if (Meteor.user())  {
                 tags = Meteor.user().profile.tags
-                tags.push(tag)
-                Meteor.users.update({_id:Meteor.user()._id}, { $set: {'tags': tags} })
-                console.log(Meteor.user().profile.tags)
+                if (tags.indexOf(tag) == -1){
+                    tags.push(tag)
+                    Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
+                }
             }
         }
     })
