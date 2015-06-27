@@ -131,6 +131,7 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+<<<<<<< Updated upstream
     Meteor.startup(function () {
         Messages.remove({});
         Rooms.remove({});
@@ -220,3 +221,55 @@ function generateUserName() {
   var randAnimal = animals[Math.floor(Math.random() * animals.length)];
   return randAdj + '_' + randAnimal;
 }
+=======
+  Meteor.startup(function () {
+    Messages.remove({});
+    Rooms.remove({});
+    if (Rooms.find().count() === 0) {
+      ["user1", "user2", "user3", "user4"].forEach(function(r) {
+        Rooms.insert({roomname: r});
+      });
+    }
+  });
+  
+  Rooms.allow({
+    insert: function (userId, doc) {
+      return (userId !== null);
+    }
+  })
+  Rooms.deny({
+    insert: function (userId, doc) {
+      return (userId === null);
+    },
+    update: function (userId, doc, fieldNames, modifier) {
+      return true;
+    },
+    remove: function (userId, doc) {
+      return true;
+    }
+  });
+  Messages.deny({
+    insert: function (userId, doc) {
+      return (userId === null);
+    },
+    update: function (userId, doc, fieldNames, modifier) {
+      return true;
+    },
+    remove: function (userId, doc) {
+      return true;
+    }
+  });
+  Messages.allow({
+    insert: function (userId, doc) {
+      return (userId !== null);
+    }
+  });
+  
+  Meteor.publish("rooms", function () {
+    return Rooms.find();
+  });
+  Meteor.publish("messages", function () {
+    return Messages.find({}, {sort: {ts: -1}});
+  });
+}
+>>>>>>> Stashed changes
