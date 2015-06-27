@@ -142,7 +142,7 @@ if (Meteor.isClient) {
         var currentUser = Meteor.user();
         var chatPartner = matchUser(currentUser);
         if(chatPartner !== undefined) {
-          var room_id = Rooms.insert({user: currentUser, 
+          var room_id = Rooms.insert({user: currentUser,
             chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
           console.log(room_id);
           Meteor.users.update({_id: Meteor.userId()}, {
