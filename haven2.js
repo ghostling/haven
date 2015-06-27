@@ -90,7 +90,8 @@ if (Meteor.isServer) {
 
     Accounts.onCreateUser( function(options, user) {
         if (options.profile) user.profile = options.profile;
-        user.profile.tags = [];
+        user.profile.tags = []; // list of strings that rep. tags
+        user.profile.active_rooms = []; // list of id's of room objs
         user.profile.name = "happy panda";
         return user;
     });
@@ -134,4 +135,19 @@ if (Meteor.isServer) {
     Meteor.publish("messages", function () {
         return Messages.find({}, {sort: {ts: -1}});
     });
+}
+
+/********************Functions for later**************************/
+/**
+ * @param user User object
+ * TODO: Verify that for a given user obj, return a user obj with an overlapping tag
+ * AND the other user is not currently in an active_convo with current user.
+ */
+function matchUser(user) {
+    var tags = user.profile.tags; // list of tags
+    var active_rooms = user.profile.active_rooms; // list of tags
+    console.log(tags); // TODO: make sure this is list
+
+    return Accounts.findOne(
+        {tags: {$in: tags}, active_rooms: {$nin: active_rooms});
 }
