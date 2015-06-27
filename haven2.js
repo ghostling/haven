@@ -77,20 +77,21 @@ if (Meteor.isClient) {
         }
     });
 
-    // Template.newChat.events({
-    //   'click': function(e) {
-    //     // Run the user matching algorithm and return a user
-    //     // Make chat partner equal to user you've been matched with
-    //     var chatPartner = "user 42";
-    //     Rooms.insert({user: Meteor.user().username, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner})
-    //   }
-    // })
-
     Template.rooms.events({
         'click li.chat--name': function(e) {
             Session.set("roomname", e.target.innerText);
         }
     });
+
+    Template.newChat.events({
+      'click': function(e) {
+        var currentUser = Meteor.user();
+        var chatPartner = matchUser(currentUser);
+        if(chatPartner !== undefined) {
+          Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
+        }
+      }
+    })
 
     Template.rooms.helpers({
         rooms: function() {
@@ -124,10 +125,17 @@ if (Meteor.isServer) {
 
     Accounts.onCreateUser( function(options, user) {
         if (options.profile) user.profile = options.profile;
-        user.profile.tags = [];
-        user.profile.name = "happy panda";
+        user.profile.tags = []; // list of strings that rep. tags
+        user.profile.active_rooms = []; // list of id's of room objs
+        user.profile.name = generateUserName();
         return user;
     });
+
+    Rooms.allow({
+      insert: function (userId, doc) {
+        return (userId !== null);
+      }
+    })
 
     Rooms.deny({
         insert: function (userId, doc) {
@@ -168,4 +176,29 @@ if (Meteor.isServer) {
     Meteor.publish("messages", function () {
         return Messages.find({}, {sort: {ts: -1}});
     });
+}
+
+/********************Functions for later**************************/
+/**
+ * @param user User object
+ * TODO: Verify that for a given user obj, return a user obj with an overlapping tag
+ * AND the other user is not currently in an active_convo with current user.
+ */
+function matchUser(user) {
+    var tags = user.profile.tags; // list of tags
+    var active_rooms = user.profile.active_rooms; // list of tags
+    console.log(tags); // TODO: make sure this is list
+
+    return Meteor.users.findOne(
+        {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
+}
+
+var adjectives = ['happy', 'confused', 'prideful'];
+var animals = ['panda', 'cat', 'puppy'];
+
+// TODO: make sure 2 users don't have same name - later
+function generateUserName() {
+  var randAdj = adjectives[Math.floor(Math.random() * adjectives.length)];
+  var randAnimal = animals[Math.floor(Math.random() * animals.length)];
+  return randAdj + '_' + randAnimal;
 }

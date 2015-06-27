@@ -17,6 +17,8 @@ template(name='navbar')
       .uk-container.uk-container-center
         ul.uk-navbar-nav
           li Haven
+          &nbsp;
+          +newChat
         .uk-navbar-flip
           ul.uk-navbar-nav
             +login
@@ -26,6 +28,9 @@ template(name='login')
     button.button-login Log out
   else
     button.button-login Log in with Facebook
+
+template(name='newChat')
+  button.button-newChat Find New Chat
 
 template(name='search')
   h2 Talk to me about...
@@ -58,7 +63,6 @@ template(name='rooms')
   ul
     each rooms
       +room
-    li Find new chat
 
 template(name='room')
   li.chat--name #{roomname}
