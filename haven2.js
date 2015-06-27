@@ -36,6 +36,7 @@ if (Meteor.isClient) {
                     Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
                 }
             }
+            e.target.childNodes[0].value = ''
         }
     })
 
