@@ -112,6 +112,12 @@ if (Meteor.isClient) {
             return Meteor.release;
         }
     });
+
+    Template.tags.helpers({
+        tags: function() {
+            return Meteor.user().profile.tags;
+        }
+    });
 }
 
 if (Meteor.isServer) {
