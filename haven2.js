@@ -3,6 +3,9 @@ Rooms = new Meteor.Collection("rooms");
 
 if (Meteor.isClient) {
   Accounts.ui.config({
+    requestPermissions: {
+      facebook: [],
+    },
     passwordSignupFields: 'USERNAME_ONLY'
   });
 
@@ -86,6 +89,10 @@ if (Meteor.isServer) {
     }
   });
 
+  Accounts.onCreateUser( function() {
+    user.tags = [];
+  });
+
   Rooms.deny({
     insert: function (userId, doc) {
       return true;
@@ -97,17 +104,21 @@ if (Meteor.isServer) {
       return true;
     }
   });
+
   Messages.deny({
     insert: function (userId, doc) {
       return (userId === null);
     },
+
     update: function (userId, doc, fieldNames, modifier) {
       return true;
     },
+
     remove: function (userId, doc) {
       return true;
     }
   });
+
   Messages.allow({
     insert: function (userId, doc) {
       return (userId !== null);
@@ -117,6 +128,7 @@ if (Meteor.isServer) {
   Meteor.publish("rooms", function () {
     return Rooms.find();
   });
+
   Meteor.publish("messages", function () {
     return Messages.find({}, {sort: {ts: -1}});
   });
