@@ -63,6 +63,15 @@ if (Meteor.isClient) {
         }
     });
 
+    // Template.newChat.events({
+    //   'click': function(e) {
+    //     // Run the user matching algorithm and return a user
+    //     // Make chat partner equal to user you've been matched with
+    //     var chatPartner = "user 42";
+    //     Rooms.insert({user: Meteor.user().username, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner})
+    //   }
+    // })
+
     Template.rooms.events({
         'click li.chat--name': function(e) {
             Session.set("roomname", e.target.innerText);
