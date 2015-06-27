@@ -10,7 +10,6 @@ body
           .uk-container.uk-container-center
             h1 Haven
             +login
-            +search
 
 template(name='navbar')
   .uk-grid
@@ -30,16 +29,16 @@ template(name='login')
 
 template(name='search')
   h2 Talk to me about...
-  .uk-autocomplete.uk-form(data-uk-autocomplete='{source: "tags.json"}')
+  form.searchform
     input(type='text')
 
 template(name='chat')
   .uk-grid
     .uk-width-1-1
+      +search
       +input
       +messages
       +rooms
-      +loginButtons
 
 template(name='input')
   input#msg(type='text', placeholder='Type your message here...')

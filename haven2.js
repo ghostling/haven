@@ -24,6 +24,20 @@ if (Meteor.isClient) {
         }
     })
 
+    Template.search.events({
+        'submit .searchform': function(e)   {
+            e.preventDefault()
+            var tag = e.target.childNodes[0].value
+            var tags
+            if (Meteor.user())  {
+                tags = Meteor.user().profile.tags
+                tags.push(tag)
+                Meteor.users.update({_id:Meteor.user()._id}, { $set: {'tags': tags} })
+                console.log(Meteor.user().profile.tags)
+            }
+        }
+    })
+
     Template.input.events({
         'click .sendMsg': function(e) {
             _sendMessage();
