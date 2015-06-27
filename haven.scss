@@ -1,12 +1,37 @@
-//base styles
 //color variables
-$primary: #4b9eff;
+$dark-gray: #333;
+$blue: #4b9eff;
+
+//font stack
+$sans-serif: Lato, sans-serif;
+//base styles
 * {
   box-sizing: border-box;
 }
 html,
 body  {
   height: 100%;
+  font-family: $sans-serif;
+  font-size: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+input {
+  font-family: $sans-serif;
+}
+
+.haven-navbar {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  background-color: $dark-gray;
+  color: white;
+  border-radius: 0;
 }
 
 .container--full-height {
@@ -24,7 +49,7 @@ body  {
 }
 
 .tag {
-  background-color: $primary;
+  background-color: $blue;
   color: white;
   display: inline-block;
   padding: .5rem;
