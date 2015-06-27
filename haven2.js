@@ -38,7 +38,6 @@ if (Meteor.isClient) {
                 var tag = $('.search--input').val()
                 var tagInList = false
                 for(var t in tagList)   {
-                    console.log(t)
                     if(tag == tagList[t].value)  {
                         tagInList = true
                         break
@@ -75,7 +74,7 @@ if (Meteor.isClient) {
         if(Meteor.user()){
             tags = Meteor.user().profile.tags
             tagIndex = tags.indexOf(tag)
-            if(tagIndex != 1)   {
+            if(tagIndex != -1)   {
                 tags.splice(tagIndex, 1)
                 Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
             }
