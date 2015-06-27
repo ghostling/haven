@@ -1,15 +1,32 @@
 head
   title Haven
 body
-  .container--full-height.uk-grid
+    +navbar
     if currentUser
       +chat
     else
-      .container--full-height.uk-flex.uk-flex-center.uk-flex-middle.uk-width-1-1
-        div
-          h1 Haven
-          +loginButtons
-          +search
+      .uk-grid.container--full-height
+        .container--full-height.uk-flex.uk-flex-center.uk-flex-middle.uk-width-1-1
+          .uk-container.uk-container-center
+            h1 Haven
+            +login
+            +search
+
+template(name='navbar')
+  .uk-grid
+    .uk-navbar.uk-width-1-1
+      .uk-container.uk-container-center
+        ul.uk-navbar-nav
+          li Haven
+        .uk-navbar-flip
+          ul.uk-navbar-nav
+            +login
+
+template(name='login')
+  if currentUser
+    button.button-login Log out
+  else
+    button.button-login Log in with Facebook
 
 template(name='search')
   h2 Talk to me about...
@@ -17,10 +34,12 @@ template(name='search')
     input(type='text')
 
 template(name='chat')
-  +input
-  +messages
-  +rooms
-  +loginButtons
+  .uk-grid
+    .uk-width-1-1
+      +input
+      +messages
+      +rooms
+      +loginButtons
 
 template(name='input')
   input#msg(type='text', placeholder='Type your message here...')
@@ -40,6 +59,7 @@ template(name='rooms')
   ul
     each rooms
       +room
+    li Find new chat
 
 template(name='room')
-  li(style='#{roomstyle}') #{roomname}
+  li.chat--name #{roomname}

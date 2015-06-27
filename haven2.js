@@ -13,6 +13,17 @@ if (Meteor.isClient) {
     Meteor.subscribe("messages");
     Session.setDefault("roomname", "user1");
 
+    Template.login.events({
+        'click .button-login': function(e)  {
+            if (Meteor.user())  {
+                Meteor.logout()
+            }
+            else  {
+                Meteor.loginWithFacebook()
+            }
+        }
+    })
+
     Template.input.events({
         'click .sendMsg': function(e) {
             _sendMessage();
@@ -52,8 +63,17 @@ if (Meteor.isClient) {
         }
     });
 
+    // Template.newChat.events({
+    //   'click': function(e) {
+    //     // Run the user matching algorithm and return a user
+    //     // Make chat partner equal to user you've been matched with
+    //     var chatPartner = "user 42";
+    //     Rooms.insert({user: Meteor.user().username, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner})
+    //   }
+    // })
+
     Template.rooms.events({
-        'click li': function(e) {
+        'click li.chat--name': function(e) {
             Session.set("roomname", e.target.innerText);
         }
     });
@@ -149,5 +169,5 @@ function matchUser(user) {
     console.log(tags); // TODO: make sure this is list
 
     return Accounts.findOne(
-        {tags: {$in: tags}, active_rooms: {$nin: active_rooms});
+        {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
 }
