@@ -73,8 +73,9 @@ if (Meteor.isClient) {
       'click': function(e) {
         // Run the user matching algorithm and return a user
         // Make chat partner equal to user you've been matched with
-        var chatPartner = "user 42";
-        Rooms.insert({user: Meteor.user().username, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner})
+        var currentUser = Meteor.user();
+        var chatPartner = matchUser(currentUser);
+        Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
       }
     })
 
@@ -112,7 +113,7 @@ if (Meteor.isServer) {
         if (options.profile) user.profile = options.profile;
         user.profile.tags = []; // list of strings that rep. tags
         user.profile.active_rooms = []; // list of id's of room objs
-        user.profile.name = "happy panda";
+        user.profile.name = generateUserName();
         return user;
     });
 
@@ -176,4 +177,14 @@ function matchUser(user) {
 
     return Accounts.findOne(
         {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
+}
+
+var adjectives = ['happy', 'confused', 'prideful'];
+var animals = ['panda', 'cat', 'puppy'];
+
+// TODO: make sure 2 users don't have same name - later
+function generateUserName() {
+  var randAdj = adjectives[Math.floor(Math.random() * adjectives.length)];
+  var randAnimal = animals[Math.floor(Math.random() * animals.length)];
+  return randAdj + '_' + randAnimal;
 }
