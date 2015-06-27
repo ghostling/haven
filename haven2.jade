@@ -2,11 +2,14 @@ head
   title Haven
 body
   .container--full-height.uk-grid
-    .container--full-height.uk-flex.uk-flex-center.uk-flex-middle.uk-width-1-1
-      div
-        h1 Haven
-        +search
-        +chat
+    if currentUser
+      +chat
+    else
+      .container--full-height.uk-flex.uk-flex-center.uk-flex-middle.uk-width-1-1
+        div
+          h1 Haven
+          +loginButtons
+          +search
 
 template(name='search')
   h2 Talk to me about...
@@ -14,19 +17,17 @@ template(name='search')
     input(type='text')
 
 template(name='chat')
-  if currentUser
-    +input
-    +messages
-    +rooms
-  else
-    +loginButtons
+  +input
+  +messages
+  +rooms
+  +loginButtons
 
 template(name='input')
   input#msg(type='text', placeholder='Type your message here...')
   input(type='button', value='Send Message')
 
 template(name='messages')
-  h4 Room: #{roomname}
+  h4 Chat: #{roomname}
   #messages
     each messages
       +message
@@ -35,7 +36,7 @@ template(name='message')
   p #{user} (#{timestamp}) #{msg}
 
 template(name='rooms')
-  h4 Join a room
+  h4 My Chats
   ul
     each rooms
       +room

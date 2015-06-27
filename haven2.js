@@ -11,7 +11,7 @@ if (Meteor.isClient) {
 
   Meteor.subscribe("rooms");
   Meteor.subscribe("messages");
-  Session.setDefault("roomname", "Meteor");
+  Session.setDefault("roomname", "user1");
 
   Template.input.events({
     'click .sendMsg': function(e) {
@@ -83,7 +83,7 @@ if (Meteor.isServer) {
     Messages.remove({});
     Rooms.remove({});
     if (Rooms.find().count() === 0) {
-      ["Meteor", "JavaScript", "Reactive", "MongoDB"].forEach(function(r) {
+      ["user1", "user2", "user3", "user4"].forEach(function(r) {
         Rooms.insert({roomname: r});
       });
     }
@@ -95,7 +95,7 @@ if (Meteor.isServer) {
 
   Rooms.deny({
     insert: function (userId, doc) {
-      return true;
+      return (userId === null);
     },
     update: function (userId, doc, fieldNames, modifier) {
       return true;
