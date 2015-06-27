@@ -1,1 +1,6 @@
 haven/.meteor/local
+
+#IntelliJ
+.idea/
+
+.DS_Store
