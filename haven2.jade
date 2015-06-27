@@ -17,7 +17,6 @@ template(name='navbar')
       .uk-container.uk-container-center
         ul.uk-navbar-nav
           li Haven
-          &nbsp;
           +newChat
         .uk-navbar-flip
           ul.uk-navbar-nav
@@ -53,6 +52,7 @@ template(name='chat')
         +messages
         +input
 
+
 template(name='input')
   input#msg(type='text', placeholder='Type your message here...')
   input(type='button', value='Send Message')
@@ -74,3 +74,16 @@ template(name='rooms')
 
 template(name='room')
   li.chat--name #{roomname}
+
+template(name='tags')
+  select(multiple, data-role="tagsinput")
+    option(value='topic1')
+    option(value='topic2')
+    option(value='topic3')
+    option(value='topic4')
+    option(value='topic5')
+    option(value='topic6')
+    option(value='topic7')
+    option(value='topic8')
+    option(value='topic9')
+    option(value='topic10')
