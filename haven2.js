@@ -35,18 +35,25 @@ if (Meteor.isClient) {
     Template.search.events({
         'submit .searchform': function(e)   {
             e.preventDefault()
-            var tag = $(e.target).find('input').val()
-            var tags
-            if (Meteor.user())  {
-                tags = Meteor.user().profile.tags
-                if (tags.indexOf(tag) == -1){
-                    tags.push(tag)
-                    Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
-                }
-            }
-            e.target.childNodes[0].value = ''
+        },
+        'click .search--autocomplete li': function(e)   {
+            addTag($('.search--input').val())
+            $('.search--input').val('')
         }
     })
+    var addTag = function(tagName) {
+        var tags
+        if (Meteor.user())  {
+            tags = Meteor.user().profile.tags
+            if (tags.indexOf(tagName) == -1){
+                tags.push(tagName)
+                Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
+            }
+        }
+    }
+    var removeTag = function(element)   {
+        console.log(element)
+    }
 
     Template.input.events({
         'click': function(e) {
@@ -121,11 +128,6 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.tags.helpers({
-        tags: function() {
-            return Meteor.user().profile.tags;
-        }
-    });
 }
 
 if (Meteor.isServer) {
