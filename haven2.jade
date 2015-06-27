@@ -30,7 +30,8 @@ template(name='login')
     button.button-login Log in with Facebook
 
 template(name='newChat')
-  button.button-newChat Find New Chat
+  if currentUser
+    button.button-newChat Find New Chat
 
 template(name='search')
   h2 Talk to me about...

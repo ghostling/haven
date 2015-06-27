@@ -17,8 +17,7 @@ if (Meteor.isClient) {
         'click .button-login': function(e)  {
             if (Meteor.user())  {
                 Meteor.logout()
-            }
-            else  {
+            } else  {
                 Meteor.loginWithFacebook()
             }
         }
