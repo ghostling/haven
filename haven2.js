@@ -4,7 +4,7 @@ Rooms = new Meteor.Collection("rooms");
 if (Meteor.isClient) {
   Accounts.ui.config({
     requestPermissions: {
-      facebook: [],
+      facebook: ["email"],
     },
     passwordSignupFields: 'USERNAME_ONLY'
   });
@@ -89,8 +89,11 @@ if (Meteor.isServer) {
     }
   });
 
-  Accounts.onCreateUser( function() {
-    user.tags = [];
+  Accounts.onCreateUser( function(options, user) {
+    if (options.profile) user.profile = options.profile;
+    user.profile.tags = [];
+    user.profile.name = "happy panda";
+    return user;
   });
 
   Rooms.deny({
@@ -107,7 +110,7 @@ if (Meteor.isServer) {
 
   Messages.deny({
     insert: function (userId, doc) {
-      return (userId === null);
+      return true;
     },
 
     update: function (userId, doc, fieldNames, modifier) {
