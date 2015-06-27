@@ -37,9 +37,8 @@ template(name='chat')
       .uk-width-3-10
         +rooms
       .uk-width-7-10
-        if rooms
-          +messages
-          +input
+        +messages
+        +input
 
 template(name='newChat')
   if currentUser
