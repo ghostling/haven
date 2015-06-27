@@ -27,7 +27,7 @@ if (Meteor.isClient) {
     Template.search.events({
         'submit .searchform': function(e)   {
             e.preventDefault()
-            var tag = e.target.childNodes[0].value
+            var tag = $(e.target).find('input').val()
             var tags
             if (Meteor.user())  {
                 tags = Meteor.user().profile.tags
@@ -195,8 +195,8 @@ function matchUser(user) {
         {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
 }
 
-var adjectives = ['happy', 'confused', 'prideful'];
-var animals = ['panda', 'cat', 'puppy', 'unicorn'];
+var adjectives = ['happy', 'confused', 'prideful', 'happy', 'confused', 'amiable', 'affectionate', 'amicable', 'amusing', 'brave', 'bright', 'calm', 'charming', 'compassionate', 'affable', 'considerate', 'courageous', 'creative', 'determined', 'diligent', 'dynamic', 'easygoing', 'energetic', 'enthusiastic', 'exuberant', 'fearless', 'friendly', 'funny', 'generous', 'gentle', 'helpful', 'humorous', 'imaginative', 'kind', 'neat', 'optimistic', 'passionate', 'patient', 'persistent', 'resourceful', 'sincere', 'thoughtful', 'beautiful', 'jumpy'];
+var animals = ['panda', 'cat', 'puppy', 'turtle', 'hippo', 'octopus', 'rhino', 'penguin', 'hamster', 'bunny', 'fish', 'crab', 'sloth', 'armadillo', 'lion', 'bear', 'tiger', 'elephant', 'giraffe', 'llama', 'camel', 'squirrel', 'otter', 'whale', 'dolphin', 'porpoise', 'seal', 'shark', 'porcupine', 'beaver', 'fox', 'bat', 'tortoise', 'jaguar', 'kangaroo', 'alligator', 'crocodile', 'owl', 'parrot', 'deer', 'eagle', 'mongoose', 'snake', 'hyena', 'lizard', 'chameleon', 'chicken', 'pig', 'cow', 'horse', 'duck', 'goose'];
 
 // TODO: make sure 2 users don't have same name - later
 function generateUserName() {

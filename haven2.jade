@@ -35,7 +35,8 @@ template(name='newChat')
 template(name='search')
   h2 Talk to me about...
   form.searchform
-    input(type='text', placeholder='Enter tags:')
+    .uk-autocomplete.uk-form(data-uk-autocomplete='{source: "/tags.json"}')
+      input(type='text', placeholder='Enter tags:')
   each currentUser.profile.tags
     +tag
 
@@ -45,7 +46,7 @@ template(name='tag')
 template(name='chat')
   .uk-container.uk-container-center
     .uk-grid
-      //-+search
+      +search
       .uk-width-3-10
         +rooms
       .uk-width-7-10
