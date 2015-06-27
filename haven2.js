@@ -63,20 +63,20 @@ if (Meteor.isClient) {
         }
     });
 
-    // Template.newChat.events({
-    //   'click': function(e) {
-    //     // Run the user matching algorithm and return a user
-    //     // Make chat partner equal to user you've been matched with
-    //     var chatPartner = "user 42";
-    //     Rooms.insert({user: Meteor.user().username, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner})
-    //   }
-    // })
-
     Template.rooms.events({
         'click li.chat--name': function(e) {
             Session.set("roomname", e.target.innerText);
         }
     });
+
+    Template.newChat.events({
+      'click': function(e) {
+        // Run the user matching algorithm and return a user
+        // Make chat partner equal to user you've been matched with
+        var chatPartner = "user 42";
+        Rooms.insert({user: Meteor.user().username, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner})
+      }
+    })
 
     Template.rooms.helpers({
         rooms: function() {
@@ -114,6 +114,12 @@ if (Meteor.isServer) {
         user.profile.name = "happy panda";
         return user;
     });
+
+    Rooms.allow({
+      insert: function (userId, doc) {
+        return (userId !== null);
+      }
+    })
 
     Rooms.deny({
         insert: function (userId, doc) {

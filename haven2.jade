@@ -59,7 +59,10 @@ template(name='rooms')
   ul
     each rooms
       +room
-    li Find new chat
+    +newChat
 
 template(name='room')
   li.chat--name #{roomname}
+
+template(name='newChat')
+  li.chat--name Find New Chat
