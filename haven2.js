@@ -24,6 +24,7 @@ if (Meteor.isClient) {
         }
     })
 
+    //Add tags
     Template.search.events({
         'submit .searchform': function(e)   {
             e.preventDefault()
