@@ -2,11 +2,14 @@ head
   title Haven
 body
   .container--full-height.uk-grid
-    .container--full-height.uk-flex.uk-flex-center.uk-flex-middle.uk-width-1-1
-      div
-        h1 Haven
-        +search
-        +chat
+    if currentUser
+      +chat
+    else
+      .container--full-height.uk-flex.uk-flex-center.uk-flex-middle.uk-width-1-1
+        div
+          h1 Haven
+          +loginButtons
+          +search
 
 template(name='search')
   h2 Talk to me about...
@@ -18,8 +21,6 @@ template(name='chat')
     +input
     +messages
     +rooms
-  else
-    +loginButtons
 
 template(name='input')
   input#msg(type='text', placeholder='Type your message here...')
@@ -41,4 +42,4 @@ template(name='rooms')
       +room
 
 template(name='room')
-  li(style='#{roomstyle}') #{roomname}
+  li #{roomname}
