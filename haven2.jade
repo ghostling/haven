@@ -58,8 +58,9 @@ template(name='tag')
 
 
 template(name='input')
-  input#msg(type='text', placeholder='Type your message here...')
-  input(type='button', value='Send Message')
+  .textbox
+    input#msg.textbox--text(type='text', placeholder='Type your message here...')
+    input(type='button', value='Send Message')
 
 template(name='messages')
   h4 Chat: #{roomname}
