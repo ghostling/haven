@@ -174,6 +174,6 @@ function matchUser(user) {
     var active_rooms = user.profile.active_rooms; // list of tags
     console.log(tags); // TODO: make sure this is list
 
-    return Accounts.findOne(
+    return Meteor.users.findOne(
         {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
 }
