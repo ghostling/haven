@@ -49,7 +49,7 @@ if (Meteor.isClient) {
     })
 
     Template.input.events({
-        'click .sendMsg': function(e) {
+        'click': function(e) {
             _sendMessage();
         },
         'keyup #msg': function(e) {
@@ -62,7 +62,7 @@ if (Meteor.isClient) {
     _sendMessage = function() {
         var el = document.getElementById("msg");
         Messages.insert({
-            user: Meteor.user().username,
+            user: Meteor.user().profile.name,
             msg: el.value,
             ts: new Date(),
             room: Session.get("roomname")});
