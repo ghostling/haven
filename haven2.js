@@ -196,7 +196,7 @@ function matchUser(user) {
 }
 
 var adjectives = ['happy', 'confused', 'prideful'];
-var animals = ['panda', 'cat', 'puppy'];
+var animals = ['panda', 'cat', 'puppy', 'unicorn'];
 
 // TODO: make sure 2 users don't have same name - later
 function generateUserName() {

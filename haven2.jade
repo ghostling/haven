@@ -1,8 +1,8 @@
 head
   title Haven
 body
-    +navbar
     if currentUser
+      +navbar
       +chat
     else
       .uk-grid.container--full-height
@@ -44,12 +44,14 @@ template(name='tag')
   p #{this}
 
 template(name='chat')
-  .uk-grid
-    .uk-width-1-1
-      +search
-      +input
-      +messages
-      +rooms
+  .uk-container.uk-container-center
+    .uk-grid
+      //-+search
+      .uk-width-3-10
+        +rooms
+      .uk-width-7-10
+        +messages
+        +input
 
 template(name='input')
   input#msg(type='text', placeholder='Type your message here...')
