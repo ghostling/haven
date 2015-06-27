@@ -8,5 +8,6 @@ meteor-platform
 insecure
 standard-app-packages
 bootstrap
-accounts-ui
+accounts-facebook
 accounts-password
+accounts-ui
