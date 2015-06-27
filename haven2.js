@@ -71,11 +71,11 @@ if (Meteor.isClient) {
 
     Template.newChat.events({
       'click': function(e) {
-        // Run the user matching algorithm and return a user
-        // Make chat partner equal to user you've been matched with
         var currentUser = Meteor.user();
         var chatPartner = matchUser(currentUser);
-        Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
+        if(chatPartner !== undefined) {
+          Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
+        }
       }
     })
 
