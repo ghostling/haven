@@ -23,6 +23,14 @@ if (Meteor.isClient) {
         }
     })
 
+    Template.search.onRendered(function()   {
+        var options = {
+            source: tags,
+            minLength: 0
+        }
+        var autocomplete = UIkit.autocomplete($('.js-search--autocomplete'), options)
+        console.log(autocomplete)
+    })
     //Add tags
     Template.search.events({
         'submit .searchform': function(e)   {
@@ -112,6 +120,12 @@ if (Meteor.isClient) {
             return Meteor.release;
         }
     });
+
+    Template.tags.helpers({
+        tags: function() {
+            return Meteor.user().profile.tags;
+        }
+    });
 }
 
 if (Meteor.isServer) {
@@ -194,9 +208,9 @@ function matchUser(user) {
     return Meteor.users.findOne(
         {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
 }
-
-var adjectives = ['happy', 'confused', 'prideful', 'happy', 'confused', 'amiable', 'affectionate', 'amicable', 'amusing', 'brave', 'bright', 'calm', 'charming', 'compassionate', 'affable', 'considerate', 'courageous', 'creative', 'determined', 'diligent', 'dynamic', 'easygoing', 'energetic', 'enthusiastic', 'exuberant', 'fearless', 'friendly', 'funny', 'generous', 'gentle', 'helpful', 'humorous', 'imaginative', 'kind', 'neat', 'optimistic', 'passionate', 'patient', 'persistent', 'resourceful', 'sincere', 'thoughtful', 'beautiful', 'jumpy'];
-var animals = ['panda', 'cat', 'puppy', 'turtle', 'hippo', 'octopus', 'rhino', 'penguin', 'hamster', 'bunny', 'fish', 'crab', 'sloth', 'armadillo', 'lion', 'bear', 'tiger', 'elephant', 'giraffe', 'llama', 'camel', 'squirrel', 'otter', 'whale', 'dolphin', 'porpoise', 'seal', 'shark', 'porcupine', 'beaver', 'fox', 'bat', 'tortoise', 'jaguar', 'kangaroo', 'alligator', 'crocodile', 'owl', 'parrot', 'deer', 'eagle', 'mongoose', 'snake', 'hyena', 'lizard', 'chameleon', 'chicken', 'pig', 'cow', 'horse', 'duck', 'goose'];
+var tags = [{'value': 'mental health'},{'value': 'LGBTQIA'},{'value': 'first-generation college student'},{'value': 'racism'},{'value': 'sexism'},{'value': 'homelessness'},{'value': 'college dropout'},{'value': 'unemployment'},{'value': 'disabilities'},{'value': 'illnesses'},{'value': 'abuse'},{'value': 'insecurity'},{'value': 'survivor'}]
+var adjectives = ['adaptable','adventurous','affable','affectionate','agreeable','ambitious','amiable','amicable','amusing','brave','bright','broad-minded','calm','careful','charming','communicative','compassionate ','conscientious','considerate','convivial','courageous','courteous','creative','decisive','determined','diligent','diplomatic','discreet','dynamic','easygoing','emotional','energetic','enthusiastic','exuberant','fair-minded','faithful','fearless','forceful','frank','friendly','funny','generous','gentle','good','gregarious','hard-working','helpful','honest','humorous','imaginative','impartial','independent','intellectual','intelligent','intuitive','inventive','kind','loving','loyal','modest','neat','nice','optimistic','passionate','patient','persistent ','pioneering','philosophical','placid','plucky','polite','powerful','practical','pro-active','quick-witted','quiet','rational','reliable','reserved','resourceful','romantic','self-confident','self-disciplined','sensible','sensitive','shy','sincere','sociable','straightforward','sympathetic','thoughtful','tidy','tough','unassuming','understanding','versatile','warmhearted','willing','witty'];
+var animals = ['alligator','ant','bear','bee','bird','camel','cat','cheetah','chicken','chimpanzee','cow','crocodile','deer','dog','dolphin','duck','eagle','elephant','fish','fly','fox','frog','giraffe','goat','goldfish','hamster','hippopotamus','horse','kangaroo','kitten','lion','lobster','monkey','octopus','owl','panda','pig','puppy','rabbit','rat','scorpion','seal','shark','sheep','snail','snake','spider','squirrel','tiger','turtle','wolf','zebra'];
 
 // TODO: make sure 2 users don't have same name - later
 function generateUserName() {

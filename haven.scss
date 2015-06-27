@@ -1,9 +1,19 @@
 //base styles
 html,
 body  {
-  height: 100%
+  height: 100%;
 }
 
 .container--full-height {
-  height: 100%
+  height: 100%;
+}
+
+.search--autocomplete {
+  position: relative;
+}
+
+.search--autocomplete .uk-dropdown  {
+  position: absolute;
+  top: 0;
+  margin-top: 20px;
 }
