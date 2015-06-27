@@ -25,20 +25,38 @@ if (Meteor.isClient) {
 
     Template.search.onRendered(function()   {
         var options = {
-            source: tags,
+            source: tagList,
             minLength: 0
         }
         var autocomplete = UIkit.autocomplete($('.js-search--autocomplete'), options)
         console.log(autocomplete)
     })
-    //Add tags
     Template.search.events({
-        'submit .searchform': function(e)   {
-            e.preventDefault()
+        'keydown .search--input': function(e)   {
+            if(e.keyCode == 13) {
+                e.preventDefault()
+                var tag = $('.search--input').val()
+                var tagInList = false
+                for(var t in tagList)   {
+                    console.log(t)
+                    if(tag == tagList[t].value)  {
+                        tagInList = true
+                        break
+                    }
+                }
+                if (tagInList)  {
+                    addTag(tag)
+                    $('.search--input').val('')
+                }
+            }
         },
         'click .search--autocomplete li': function(e)   {
+            //Add tags
             addTag($('.search--input').val())
             $('.search--input').val('')
+        },
+        'click .js-tag--close': function(e) {
+            removeTag(e.target)
         }
     })
     var addTag = function(tagName) {
@@ -52,7 +70,16 @@ if (Meteor.isClient) {
         }
     }
     var removeTag = function(element)   {
-        console.log(element)
+        var e = $(element);
+        var tag = e.parent().find('.js-tag--name').text()
+        if(Meteor.user()){
+            tags = Meteor.user().profile.tags
+            tagIndex = tags.indexOf(tag)
+            if(tagIndex != 1)   {
+                tags.splice(tagIndex, 1)
+                Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
+            }
+        }
     }
 
     Template.input.events({
@@ -210,7 +237,7 @@ function matchUser(user) {
     return Meteor.users.findOne(
         {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
 }
-var tags = [{'value': 'mental health'},{'value': 'LGBTQIA'},{'value': 'first-generation college student'},{'value': 'racism'},{'value': 'sexism'},{'value': 'homelessness'},{'value': 'college dropout'},{'value': 'unemployment'},{'value': 'disabilities'},{'value': 'illnesses'},{'value': 'abuse'},{'value': 'insecurity'},{'value': 'survivor'}]
+var tagList = [{'value': 'mental health'},{'value': 'LGBTQIA'},{'value': 'first-generation college student'},{'value': 'racism'},{'value': 'sexism'},{'value': 'homelessness'},{'value': 'college dropout'},{'value': 'unemployment'},{'value': 'disabilities'},{'value': 'illnesses'},{'value': 'abuse'},{'value': 'insecurity'},{'value': 'survivor'}]
 var adjectives = ['adaptable','adventurous','affable','affectionate','agreeable','ambitious','amiable','amicable','amusing','brave','bright','broad-minded','calm','careful','charming','communicative','compassionate ','conscientious','considerate','convivial','courageous','courteous','creative','decisive','determined','diligent','diplomatic','discreet','dynamic','easygoing','emotional','energetic','enthusiastic','exuberant','fair-minded','faithful','fearless','forceful','frank','friendly','funny','generous','gentle','good','gregarious','hard-working','helpful','honest','humorous','imaginative','impartial','independent','intellectual','intelligent','intuitive','inventive','kind','loving','loyal','modest','neat','nice','optimistic','passionate','patient','persistent ','pioneering','philosophical','placid','plucky','polite','powerful','practical','pro-active','quick-witted','quiet','rational','reliable','reserved','resourceful','romantic','self-confident','self-disciplined','sensible','sensitive','shy','sincere','sociable','straightforward','sympathetic','thoughtful','tidy','tough','unassuming','understanding','versatile','warmhearted','willing','witty'];
 var animals = ['alligator','ant','bear','bee','bird','camel','cat','cheetah','chicken','chimpanzee','cow','crocodile','deer','dog','dolphin','duck','eagle','elephant','fish','fly','fox','frog','giraffe','goat','goldfish','hamster','hippopotamus','horse','kangaroo','kitten','lion','lobster','monkey','octopus','owl','panda','pig','puppy','rabbit','rat','scorpion','seal','shark','sheep','snail','snake','spider','squirrel','tiger','turtle','wolf','zebra'];
 

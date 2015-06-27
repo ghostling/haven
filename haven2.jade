@@ -47,14 +47,14 @@ template(name='search')
   h2 Talk to me about...
   form.searchform
     .js-search--autocomplete.search--autocomplete
-      input.se(type='text', placeholder='Enter tags:')
+      input.search--input(type='text', placeholder='Enter tags:')
   each currentUser.profile.tags
     +tag
 
 template(name='tag')
   .tag
-    span.tag--name #{this}
-    span.tag--close &times;
+    span.tag--name.js-tag--name #{this}
+    span.tag--close.js-tag--close &times;
 
 
 template(name='input')
