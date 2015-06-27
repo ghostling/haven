@@ -1,6 +1,12 @@
 //color variables
 $dark-gray: #333;
+$red: #ED6A6A;
+$orange: #ED956A;
+$yellow: #EEEDA4;
+$green: #B1EEA4;
 $blue: #4b9eff;
+$blue-green: #61D3AD;
+$purple: #C5A4EE;
 
 //font stack
 $sans-serif: Lato, sans-serif;
@@ -26,6 +32,13 @@ input {
   font-family: $sans-serif;
 }
 
+
+.uk-button-success,
+.uk-button-success:hover,
+.uk-button-success:active,
+.uk-button-success:focus  {
+  background-color: $blue-green;
+}
 .haven-navbar {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
