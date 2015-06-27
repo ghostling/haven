@@ -109,8 +109,8 @@ if (Meteor.isClient) {
                 msg: el.value,
                 ts: new Date(),
                 room: Session.get("roomname")});
-                el.value = "";
-                el.focus();
+            el.value = "";
+            el.focus();
         }
     };
 
@@ -142,7 +142,8 @@ if (Meteor.isClient) {
         var currentUser = Meteor.user();
         var chatPartner = matchUser(currentUser);
         if(chatPartner !== undefined) {
-          var room_id = Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
+          var room_id = Rooms.insert({user: currentUser, 
+            chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
           console.log(room_id);
           Meteor.users.update({_id: Meteor.userId()}, {
               $push: {"profile.active_rooms": room_id}});
@@ -209,7 +210,7 @@ if (Meteor.isServer) {
 
     Messages.deny({
         insert: function (userId, doc) {
-            return true;
+            return false;
         },
 
         update: function (userId, doc, fieldNames, modifier) {
@@ -223,12 +224,12 @@ if (Meteor.isServer) {
 
     Messages.allow({
         insert: function (userId, doc) {
-            return (userId !== null);
+            return true;
         }
     });
 
     Meteor.publish("rooms", function () {
-        return Rooms.find();
+        return Rooms.find(roomname: {$ne: Meteor.user().profile.name});
     });
 
     Meteor.publish("messages", function () {
