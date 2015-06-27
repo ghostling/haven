@@ -161,9 +161,9 @@ if (Meteor.isServer) {
         Messages.remove({});
         Rooms.remove({});
         if (Rooms.find().count() === 0) {
-            ["user1", "user2", "user3", "user4"].forEach(function(r) {
-                Rooms.insert({roomname: r});
-            });
+            // ["user1", "user2", "user3", "user4"].forEach(function(r) {
+            //     Rooms.insert({roomname: r});
+            // });
         }
     });
 
