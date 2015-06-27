@@ -83,7 +83,7 @@ if (Meteor.isClient) {
     }
 
     Template.input.events({
-        'click': function(e) {
+        'click #msgBtn': function(e) {
             _sendMessage();
         },
         'keyup #msg': function(e) {
@@ -95,13 +95,15 @@ if (Meteor.isClient) {
 
     _sendMessage = function() {
         var el = document.getElementById("msg");
-        Messages.insert({
-            user: Meteor.user().profile.name,
-            msg: el.value,
-            ts: new Date(),
-            room: Session.get("roomname")});
-            el.value = "";
-            el.focus();
+        if(el.value) {
+            Messages.insert({
+                user: Meteor.user().profile.name,
+                msg: el.value,
+                ts: new Date(),
+                room: Session.get("roomname")});
+                el.value = "";
+                el.focus();
+        }
     };
 
     Template.messages.helpers({
@@ -132,7 +134,10 @@ if (Meteor.isClient) {
         var currentUser = Meteor.user();
         var chatPartner = matchUser(currentUser);
         if(chatPartner !== undefined) {
-          Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
+          var room_id = Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
+          console.log(room_id);
+          Meteor.users.update({_id: Meteor.userId()}, {
+              $push: {"profile.active_rooms": room_id}});
         }
       }
     })
