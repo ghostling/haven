@@ -26,28 +26,61 @@ if (Meteor.isClient) {
 
     Template.search.onRendered(function()   {
         var options = {
-            source: tags,
+            source: tagList,
             minLength: 0
         }
         var autocomplete = UIkit.autocomplete($('.js-search--autocomplete'), options)
         console.log(autocomplete)
     })
-    //Add tags
     Template.search.events({
-        'submit .searchform': function(e)   {
-            e.preventDefault()
-            var tag = $(e.target).find('input').val()
-            var tags
-            if (Meteor.user())  {
-                tags = Meteor.user().profile.tags
-                if (tags.indexOf(tag) == -1){
-                    tags.push(tag)
-                    Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
+        'keydown .search--input': function(e)   {
+            if(e.keyCode == 13) {
+                e.preventDefault()
+                var tag = $('.search--input').val()
+                var tagInList = false
+                for(var t in tagList)   {
+                    if(tag == tagList[t].value)  {
+                        tagInList = true
+                        break
+                    }
+                }
+                if (tagInList)  {
+                    addTag(tag)
+                    $('.search--input').val('')
                 }
             }
-            e.target.childNodes[0].value = ''
+        },
+        'click .search--autocomplete li': function(e)   {
+            //Add tags
+            addTag($('.search--input').val())
+            $('.search--input').val('')
+        },
+        'click .js-tag--close': function(e) {
+            removeTag(e.target)
         }
     })
+    var addTag = function(tagName) {
+        var tags
+        if (Meteor.user())  {
+            tags = Meteor.user().profile.tags
+            if (tags.indexOf(tagName) == -1){
+                tags.push(tagName)
+                Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
+            }
+        }
+    }
+    var removeTag = function(element)   {
+        var e = $(element);
+        var tag = e.parent().find('.js-tag--name').text()
+        if(Meteor.user()){
+            tags = Meteor.user().profile.tags
+            tagIndex = tags.indexOf(tag)
+            if(tagIndex != -1)   {
+                tags.splice(tagIndex, 1)
+                Meteor.users.update({_id:Meteor.user()._id}, { $set: {'profile.tags': tags} })
+            }
+        }
+    }
 
     Template.input.events({
         'click': function(e) {
@@ -122,11 +155,6 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.tags.helpers({
-        tags: function() {
-            return Meteor.user().profile.tags;
-        }
-    });
 }
 
 if (Meteor.isServer) {
@@ -134,9 +162,9 @@ if (Meteor.isServer) {
         Messages.remove({});
         Rooms.remove({});
         if (Rooms.find().count() === 0) {
-            ["user1", "user2", "user3", "user4"].forEach(function(r) {
-                Rooms.insert({roomname: r});
-            });
+            // ["user1", "user2", "user3", "user4"].forEach(function(r) {
+            //     Rooms.insert({roomname: r});
+            // });
         }
     });
 
@@ -219,7 +247,7 @@ function matchUser(user) {
     console.log(userFound);
     return userFound;
 }
-var tags = [{'value': 'mental health'},{'value': 'LGBTQIA'},{'value': 'first-generation college student'},{'value': 'racism'},{'value': 'sexism'},{'value': 'homelessness'},{'value': 'college dropout'},{'value': 'unemployment'},{'value': 'disabilities'},{'value': 'illnesses'},{'value': 'abuse'},{'value': 'insecurity'},{'value': 'survivor'}]
+var tagList = [{'value': 'mental health'},{'value': 'LGBTQIA'},{'value': 'first-generation college student'},{'value': 'racism'},{'value': 'sexism'},{'value': 'homelessness'},{'value': 'college dropout'},{'value': 'unemployment'},{'value': 'disabilities'},{'value': 'illnesses'},{'value': 'abuse'},{'value': 'insecurity'},{'value': 'survivor'}]
 var adjectives = ['adaptable','adventurous','affable','affectionate','agreeable','ambitious','amiable','amicable','amusing','brave','bright','broad-minded','calm','careful','charming','communicative','compassionate ','conscientious','considerate','convivial','courageous','courteous','creative','decisive','determined','diligent','diplomatic','discreet','dynamic','easygoing','emotional','energetic','enthusiastic','exuberant','fair-minded','faithful','fearless','forceful','frank','friendly','funny','generous','gentle','good','gregarious','hard-working','helpful','honest','humorous','imaginative','impartial','independent','intellectual','intelligent','intuitive','inventive','kind','loving','loyal','modest','neat','nice','optimistic','passionate','patient','persistent ','pioneering','philosophical','placid','plucky','polite','powerful','practical','pro-active','quick-witted','quiet','rational','reliable','reserved','resourceful','romantic','self-confident','self-disciplined','sensible','sensitive','shy','sincere','sociable','straightforward','sympathetic','thoughtful','tidy','tough','unassuming','understanding','versatile','warmhearted','willing','witty'];
 var animals = ['alligator','ant','bear','bee','bird','camel','cat','cheetah','chicken','chimpanzee','cow','crocodile','deer','dog','dolphin','duck','eagle','elephant','fish','fly','fox','frog','giraffe','goat','goldfish','hamster','hippopotamus','horse','kangaroo','kitten','lion','lobster','monkey','octopus','owl','panda','pig','puppy','rabbit','rat','scorpion','seal','shark','sheep','snail','snake','spider','squirrel','tiger','turtle','wolf','zebra'];
 

@@ -1,4 +1,9 @@
 //base styles
+//color variables
+$primary: #4b9eff;
+* {
+  box-sizing: border-box;
+}
 html,
 body  {
   height: 100%;
@@ -16,4 +21,16 @@ body  {
   position: absolute;
   top: 0;
   margin-top: 20px;
+}
+
+.tag {
+  background-color: $primary;
+  color: white;
+  display: inline-block;
+  padding: .5rem;
+  border-radius: .25rem;
+  margin: 0 .25rem;
+}
+.tag--close {
+  cursor: pointer;
 }

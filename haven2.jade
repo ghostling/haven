@@ -17,6 +17,8 @@ template(name='navbar')
       .uk-container.uk-container-center
         ul.uk-navbar-nav
           li Haven
+          &nbsp;
+          &nbsp;
           +newChat
         .uk-navbar-flip
           ul.uk-navbar-nav
@@ -28,6 +30,17 @@ template(name='login')
   else
     button.button-login Log in with Facebook
 
+template(name='chat')
+  .uk-container.uk-container-center
+    .uk-grid
+      .uk-width-1-1
+        +search
+      .uk-width-3-10
+        +rooms
+      .uk-width-7-10
+        +messages
+        +input
+
 template(name='newChat')
   if currentUser
     button.button-newChat Find New Chat
@@ -36,23 +49,15 @@ template(name='search')
   h2 Talk to me about...
   form.searchform
     .js-search--autocomplete.search--autocomplete
-      input(type='text', placeholder='Enter tags:')
+      input.search--input(type='text', placeholder='Enter tags:')
   each currentUser.profile.tags
     +tag
 
 template(name='tag')
-  p #{this}
+  .tag
+    span.tag--name.js-tag--name #{this}
+    span.tag--close.js-tag--close &times;
 
-template(name='chat')
-  .uk-container.uk-container-center
-    .uk-grid
-      +search
-      .uk-width-3-10
-        +rooms
-      .uk-width-7-10
-        +messages
-        +input
-        +tags
 
 template(name='input')
   input#msg(type='text', placeholder='Type your message here...')
@@ -72,6 +77,7 @@ template(name='rooms')
   ul
     each rooms
       +room
+  h5 Click "Find New Chat" to chat with more users!
 
 template(name='room')
   li.chat--name #{roomname}
