@@ -11,6 +11,7 @@ if (Meteor.isClient) {
 
     Meteor.subscribe("rooms");
     Meteor.subscribe("messages");
+    Meteor.subscribe("allUsers");
     Session.setDefault("roomname", "user1");
 
     Template.login.events({
@@ -220,6 +221,10 @@ if (Meteor.isServer) {
     Meteor.publish("messages", function () {
         return Messages.find({}, {sort: {ts: -1}});
     });
+
+    Meteor.publish("allUsers", function () {
+          return Meteor.users.find({});
+    });
 }
 
 /********************Functions for later**************************/
@@ -231,10 +236,16 @@ if (Meteor.isServer) {
 function matchUser(user) {
     var tags = user.profile.tags; // list of tags
     var active_rooms = user.profile.active_rooms; // list of tags
-    console.log(tags); // TODO: make sure this is list
+    var currentUserId = Meteor.userId();
 
-    return Meteor.users.findOne(
-        {tags: {$in: tags}, active_rooms: {$nin: active_rooms}});
+    var userFound = Meteor.users.findOne({
+        "profile.tags": {$in: tags},
+        _id: {$ne: currentUserId}
+    });//, active_rooms: {$nin: active_rooms}});
+
+    console.log("userfound: ");
+    console.log(userFound);
+    return userFound;
 }
 var tagList = [{'value': 'mental health'},{'value': 'LGBTQIA'},{'value': 'first-generation college student'},{'value': 'racism'},{'value': 'sexism'},{'value': 'homelessness'},{'value': 'college dropout'},{'value': 'unemployment'},{'value': 'disabilities'},{'value': 'illnesses'},{'value': 'abuse'},{'value': 'insecurity'},{'value': 'survivor'}]
 var adjectives = ['adaptable','adventurous','affable','affectionate','agreeable','ambitious','amiable','amicable','amusing','brave','bright','broad-minded','calm','careful','charming','communicative','compassionate ','conscientious','considerate','convivial','courageous','courteous','creative','decisive','determined','diligent','diplomatic','discreet','dynamic','easygoing','emotional','energetic','enthusiastic','exuberant','fair-minded','faithful','fearless','forceful','frank','friendly','funny','generous','gentle','good','gregarious','hard-working','helpful','honest','humorous','imaginative','impartial','independent','intellectual','intelligent','intuitive','inventive','kind','loving','loyal','modest','neat','nice','optimistic','passionate','patient','persistent ','pioneering','philosophical','placid','plucky','polite','powerful','practical','pro-active','quick-witted','quiet','rational','reliable','reserved','resourceful','romantic','self-confident','self-disciplined','sensible','sensitive','shy','sincere','sociable','straightforward','sympathetic','thoughtful','tidy','tough','unassuming','understanding','versatile','warmhearted','willing','witty'];
