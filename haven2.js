@@ -201,7 +201,7 @@ if (Meteor.isServer) {
 
     Messages.deny({
         insert: function (userId, doc) {
-            return true;
+            return false;
         },
 
         update: function (userId, doc, fieldNames, modifier) {
@@ -215,7 +215,7 @@ if (Meteor.isServer) {
 
     Messages.allow({
         insert: function (userId, doc) {
-            return (userId !== null);
+            return true;
         }
     });
 
