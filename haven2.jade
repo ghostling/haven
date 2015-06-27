@@ -49,8 +49,9 @@ template(name='search')
   form.searchform
     .js-search--autocomplete.search--autocomplete
       input.search--input(type='text', placeholder='Enter tags:')
-  each currentUser.profile.tags
-    +tag
+  .tags
+    each currentUser.profile.tags
+      +tag
 
 template(name='tag')
   .tag

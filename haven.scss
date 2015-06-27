@@ -69,6 +69,14 @@ input {
   border-radius: .25rem;
   margin: 0 .25rem;
 }
+
+@for $i from 1 through 6 {
+  $colors: $red, $orange, $yellow, $green, $blue, $purple;
+  .tag:nth-child(6n + #{$i}){
+    background-color: nth($colors, $i);
+  }
+}
+
 .tag--close {
   cursor: pointer;
 }
