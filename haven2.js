@@ -10,6 +10,17 @@ if (Meteor.isClient) {
   Meteor.subscribe("messages");
   Session.setDefault("roomname", "user1");
 
+  Template.login.events({
+    'click .button-login': function(e)  {
+      if (Meteor.user())  {
+        Meteor.logout()
+      }
+      else  {
+        Meteor.loginWithFacebook()
+      }
+    }
+  })
+
   Template.input.events({
     'click .sendMsg': function(e) {
        _sendMessage();
@@ -36,7 +47,7 @@ if (Meteor.isClient) {
       return Session.get("roomname");
     }
   });
-  
+
   Template.message.helpers({
     timestamp: function() {
       return this.ts.toLocaleString();
@@ -44,17 +55,17 @@ if (Meteor.isClient) {
   });
 
   Template.rooms.events({
-    'click li': function(e) {
+    'click li.chat--name': function(e) {
       Session.set("roomname", e.target.innerText);
     }
   });
-  
+
   Template.rooms.helpers({
     rooms: function() {
       return Rooms.find();
     }
   });
-  
+
   Template.room.helpers({
   roomstyle: function() {
       return Session.equals("roomname", this.roomname) ? "font-weight: bold" : "";
@@ -78,7 +89,7 @@ if (Meteor.isServer) {
       });
     }
   });
-  
+
   Rooms.deny({
     insert: function (userId, doc) {
       return (userId === null);
@@ -106,7 +117,7 @@ if (Meteor.isServer) {
       return (userId !== null);
     }
   });
-  
+
   Meteor.publish("rooms", function () {
     return Rooms.find();
   });
