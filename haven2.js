@@ -93,7 +93,6 @@ if (Meteor.isClient) {
           Rooms.insert({user: currentUser, chatPartner: chatPartner, ts: new Date(), roomname: chatPartner.profile.name})
         }
       }
-<<<<<<< Updated upstream
     })
 
     Template.rooms.helpers({
