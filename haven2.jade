@@ -25,7 +25,7 @@ template(name='navbar')
 
 template(name='login')
   if currentUser
-    button.button-login Log out
+    button.button-login Log out #{currentUser.profile.name}
   else
     button.button-login Log in with Facebook
 
@@ -36,7 +36,12 @@ template(name='newChat')
 template(name='search')
   h2 Talk to me about...
   form.searchform
-    input(type='text')
+    input(type='text', placeholder='Enter tags:')
+  each currentUser.profile.tags
+    +tag
+
+template(name='tag')
+  p #{this}
 
 template(name='chat')
   .uk-grid
