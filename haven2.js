@@ -229,7 +229,8 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish("rooms", function () {
-        return Rooms.find({"roomname": {$ne: Meteor.user().profile.name}});
+        return Rooms.find({});
+        //return Rooms.find({"roomname": {$ne: Meteor.user().profile.name}});
     });
 
     Meteor.publish("messages", function () {

@@ -62,12 +62,12 @@ template(name='tag')
 
 
 template(name='input')
+  h4 Chat: #{roomname}
   .textbox
     input#msg.textbox--text(type='text', placeholder='Type your message here...')
     input#msgBtn(type='button', value='Send Message')
 
 template(name='messages')
-  h4 Chat: #{roomname}
   #messages
     each messages
       +message
@@ -76,7 +76,7 @@ template(name='message')
   p #{user} (#{timestamp}) #{msg}
 
 template(name='rooms')
-  h4 My Chats
+  h3 My Chats
   ul
     each rooms
       +room
