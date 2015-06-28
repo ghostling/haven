@@ -18,7 +18,7 @@ template(name='navbar')
     .uk-navbar.uk-width-1-1.haven-navbar
       .uk-container.uk-container-center
         ul.uk-navbar-nav
-          li Haven 
+          li Haven
         .uk-navbar-flip
           ul.uk-navbar-nav
             +newChat
@@ -31,15 +31,17 @@ template(name='login')
     button.uk-button.button-login(style='margin-left:43%; margin-bottom: 3%; background-color:#3b5998; color:white; text-shadow: none;') Log in with Facebook
 
 template(name='chat')
-  .uk-container.uk-container-center
-    .uk-grid
+  .uk-container.uk-container-center.container--full-height
+    .uk-grid.container--full-height
       .uk-width-1-1
         +search
       .uk-width-3-10
         +rooms
-      .uk-width-7-10
-        +messages
-        +input
+      .uk-width-7-10.container--full-height.uk-flex.message--container
+        .messages
+          +messages
+        .message-box
+          +input
 
 template(name='newChat')
   if currentUser
@@ -61,12 +63,12 @@ template(name='tag')
 
 
 template(name='input')
+  h4 Chat: #{roomname}
   .textbox
     input#msg.textbox--text(type='text', placeholder='Type your message here...')
     input#msgBtn(type='button', value='Send Message')
 
 template(name='messages')
-  h4 Chat: #{roomname}
   #messages
     each messages
       +message
@@ -75,7 +77,7 @@ template(name='message')
   p #{user} (#{timestamp}) #{msg}
 
 template(name='rooms')
-  h4 My Chats
+  h3 My Chats
   ul
     each rooms
       +room
