@@ -8,7 +8,8 @@ body
       .uk-grid.container--full-height
         .container--full-height.uk-flex.uk-flex-center.uk-flex-middle.uk-width-1-1
           .uk-container.uk-container-center
-            h1 Haven
+            h1(class='text-center', style='font-size:1200%;') Haven
+            h2(class='text-center', style='margin-bottom:3%') Find your anonymous confidant.
             +login
             +carousel
 
@@ -25,9 +26,9 @@ template(name='navbar')
 
 template(name='login')
   if currentUser
-    button.uk-button.uk-button-link.button-login Log out #{currentUser.profile.name}
+    button.uk-button.uk-button-link.button-login(style='margin-left:43%; margin-bottom: 3%; background-color:#3b5998; color:white;') Log out #{currentUser.profile.name}
   else
-    button.uk-button.button-login Log in with Facebook
+    button.uk-button.button-login(style='margin-left:43%; margin-bottom: 3%; background-color:#3b5998; color:white; text-shadow: none;') Log in with Facebook
 
 template(name='chat')
   .uk-container.uk-container-center
@@ -93,83 +94,83 @@ template(name='carousel')
     #accordion
       #accdiv
         ul#accul
-          li.accli
+          li.accli(style='box-shadow:none;')
             a(href='http://haven2.meteor.com/')
               .imgdiv
                 .imgwrap
-                  img(src='accordion/02.jpg', alt='')
+                  img(src='accordion/01.png', alt='')
               .short
                 p
-                  span First slide
+                  //span First slide
               .text.bottom-right
                 p
-                  span Blah blah
+                  //span Blah blah
                 p
-                  span Blah blah
+                  //span Blah blah
                 p
-                  span Blah blah
+                  //span Blah blah
           li.accli
-            a(href='accordion/img/02.jpg', data-gallery='gallery', data-cap='lightbox caption 02')
+            a(href='accordion/img/02.png', data-gallery='gallery', data-cap='lightbox caption 02')
               .imgdiv
                 .imgwrap
-                  img(src='accordion/02.jpg', alt='')
+                  img(src='accordion/02.png', alt='')
               .short
                 p
-                  span Second slide
+                  //span Second slide
               .text.top-left
                 p
-                  span Blah blah
+                  //span Blah blah
                 p
-                  span(style='background: rgba(57, 108, 124, 0.52);') Blah blah
+                  //span(style='background: rgba(57, 108, 124, 0.52);') Blah blah
           li.accli
             a
               .imgdiv
                 .imgwrap
-                  img(src='accordion/03.jpg', alt='')
+                  img(src='accordion/03.png', alt='')
               .short
                 p
-                  span Third slide
+                  //span Third slide
               .text.top-right
                 p
-                  span Blah blah
+                  //span Blah blah
                 p
-                  span Blah blah
+                  //span Blah blah
           li.accli
             a
               .imgdiv
                 .imgwrap
-                  img(src='accordion/04.jpg', alt='')
+                  img(src='accordion/04.png', alt='')
               .short
                 p
-                  span Fourth slide
+                  //span Fourth slide
               .text.bottom-left
                 p
-                  span(style='background:rgba(44, 128, 128, 0.54)') Blah blah
+                  //span(style='background:rgba(44, 128, 128, 0.54)') Blah blah
                 p
-                  span(style='background:rgba(44, 128, 128, 0.54)') Blah blah
+                  //span(style='background:rgba(44, 128, 128, 0.54)') Blah blah
           li.accli
             a
               .imgdiv
                 .imgwrap
-                  img(src='accordion/05.jpg', alt='')
+                  img(src='accordion/05.png', alt='')
               .short
                 p
-                  span Fifth slide
+                  //span Fifth slide
               .text.bottom-right
                 p
-                  span Blah blah
+                  //span Blah blah
           li.accli
             a
               .imgdiv
                 .imgwrap
-                  img(src='accordion/06.jpg', alt='')
+                  img(src='accordion/06.png', alt='')
               .short
                 p
-                  span Sixth slide
+                  //span Sixth slide
               .text.bottom-right
                 p
-                  span Blah blah
+                  //span Blah blah
                 p
-                  span Blah blah
+                  //span Blah blah
       .Controller
 
