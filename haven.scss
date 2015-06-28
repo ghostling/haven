@@ -21,6 +21,10 @@ body  {
   font-size: 100%;
 }
 
+body  {
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -39,6 +43,13 @@ input {
 .uk-button-success:focus  {
   background-color: $blue;
 }
+.uk-button-link,
+.uk-button-link:hover,
+.uk-button-link:active,
+.uk-button-link:focus  {
+  color: white;
+}
+
 .haven-navbar {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -49,6 +60,17 @@ input {
 
 .container--full-height {
   height: 100%;
+}
+.message--container {
+  flex-direction: column;
+}
+.messages {
+  flex: 2;
+  overflow: auto;
+}
+
+.message-box  {
+  flex: 1;
 }
 
 .search--autocomplete {
@@ -63,7 +85,6 @@ input {
 
 .tag {
   background-color: $blue;
-  color: white;
   display: inline-block;
   padding: .5rem;
   border-radius: .25rem;

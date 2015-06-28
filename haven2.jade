@@ -17,7 +17,7 @@ template(name='navbar')
     .uk-navbar.uk-width-1-1.haven-navbar
       .uk-container.uk-container-center
         ul.uk-navbar-nav
-          li Haven 
+          li Haven
         .uk-navbar-flip
           ul.uk-navbar-nav
             +newChat
@@ -30,15 +30,17 @@ template(name='login')
     button.uk-button.button-login Log in with Facebook
 
 template(name='chat')
-  .uk-container.uk-container-center
-    .uk-grid
+  .uk-container.uk-container-center.container--full-height
+    .uk-grid.container--full-height
       .uk-width-1-1
         +search
       .uk-width-3-10
         +rooms
-      .uk-width-7-10
-        +messages
-        +input
+      .uk-width-7-10.container--full-height.uk-flex.message--container
+        .messages
+          +messages
+        .message-box
+          +input
 
 template(name='newChat')
   if currentUser
